@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.util.Log;
-import be.ugent.zeus.resto.client.data.Resto;
-import be.ugent.zeus.resto.client.data.caches.RestoCache;
+import be.ugent.zeus.resto.client.data.Building;
+import be.ugent.zeus.resto.client.data.caches.BuildingCache;
 import java.util.List;
 import org.json.JSONArray;
 
@@ -17,7 +17,7 @@ public class RestoService extends HTTPIntentService {
 
   private static final String RESTO_URL = "http://zeus.ugent.be/~blackskad/resto/api/0.1/list.json";
 
-  private RestoCache cache;
+  private BuildingCache cache;
 
   public RestoService() {
     super("RestoService");
@@ -27,7 +27,7 @@ public class RestoService extends HTTPIntentService {
   public void onCreate() {
     super.onCreate();
     // get an instance of the menu cache
-    cache = RestoCache.getInstance(this);
+    cache = BuildingCache.getInstance(this);
   }
 
   private void sync() {
@@ -35,8 +35,8 @@ public class RestoService extends HTTPIntentService {
 
     try {
       JSONArray data = new JSONArray(fetch(RESTO_URL));
-      Resto[] restos = parseJsonArray(data, Resto.class);
-      for (Resto r : restos) {
+      Building[] restos = parseJsonArray(data, Building.class);
+      for (Building r : restos) {
         cache.put(r.name, r);
       }
     } catch (Exception e) {
@@ -52,7 +52,7 @@ public class RestoService extends HTTPIntentService {
     }
 
     // get the menu from the local cache
-    List<Resto> restos = cache.getAll();
+    List<Building> restos = cache.getAll();
 
     // if not in the cache, sync it from the rest service
     if (restos == null || restos.isEmpty()) {

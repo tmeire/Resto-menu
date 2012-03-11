@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.widget.Toast;
-import be.ugent.zeus.resto.client.data.Resto;
-import be.ugent.zeus.resto.client.data.caches.RestoCache;
+import be.ugent.zeus.resto.client.data.Building;
+import be.ugent.zeus.resto.client.data.caches.BuildingCache;
 import be.ugent.zeus.resto.client.data.services.HTTPIntentService;
 import be.ugent.zeus.resto.client.data.services.RestoService;
 import be.ugent.zeus.resto.client.ui.map.RestoOverlay;
@@ -77,7 +77,7 @@ public class BuildingMap extends MapActivity {
   }
 
   private void addRestoOverlay(boolean synced) {
-    final List<Resto> restos = RestoCache.getInstance(BuildingMap.this).getAll();
+    final List<Building> restos = BuildingCache.getInstance(BuildingMap.this).getAll();
 
     if (restos.size() > 0) {
       List<Overlay> overlays = map.getOverlays();

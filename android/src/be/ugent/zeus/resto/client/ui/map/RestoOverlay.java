@@ -2,7 +2,7 @@ package be.ugent.zeus.resto.client.ui.map;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import be.ugent.zeus.resto.client.data.Resto;
+import be.ugent.zeus.resto.client.data.Building;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
@@ -18,12 +18,12 @@ public class RestoOverlay extends ItemizedOverlay {
   private List<OverlayItem> items;
   private Context context;
 
-  public RestoOverlay(Context context, List<Resto> restos) {
+  public RestoOverlay(Context context, List<Building> restos) {
     super(boundCenterBottom(context.getResources().getDrawable(android.R.drawable.star_on)));
     this.context = context;
 
     items = new ArrayList<OverlayItem>();
-    for (Resto resto : restos) {
+    for (Building resto : restos) {
       GeoPoint userPoint = new GeoPoint(resto.latitude, resto.longitude);
       items.add(new OverlayItem(userPoint, resto.name, resto.address));
     }
