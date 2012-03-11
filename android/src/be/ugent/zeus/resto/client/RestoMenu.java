@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 import be.ugent.zeus.resto.client.data.caches.MenuCache;
-import be.ugent.zeus.resto.client.data.caches.RestoCache;
 import be.ugent.zeus.resto.client.ui.SwipeyTabs;
 import be.ugent.zeus.resto.client.ui.SwipeyTabsAdapter;
 import be.ugent.zeus.resto.client.ui.menu.MenuAdapter;
@@ -76,9 +75,7 @@ public class RestoMenu extends Activity {
   }
   
   private void clearCaches () {
-    Log.i("RestoMenu", "Should clear caches now...");
     MenuCache.getInstance(this).clear();
-    RestoCache.getInstance(this).clear();
   }
 
   private List<Calendar> getViewableDates() {
@@ -208,6 +205,7 @@ public class RestoMenu extends Activity {
     // Handle item selection
     switch (item.getItemId()) {
       case R.id.clear_menu_cache:
+        // TODO: Make this update use HTTPIntentService.FORCE_UPDATE
         clearCaches();
         adapter.refresh();
         return true;
@@ -224,7 +222,7 @@ public class RestoMenu extends Activity {
   public void showAboutDialog() {
     Builder builder = new Builder(this);
     builder.setIcon(android.R.drawable.ic_dialog_info);
-    builder.setTitle(getString(R.string.about));
+    builder.setTitle(getString(R.string.menu_about));
     builder.setMessage(getAboutMessage());
     builder.setPositiveButton(getString(android.R.string.ok), null);
     AlertDialog dialog = builder.create();
@@ -233,30 +231,11 @@ public class RestoMenu extends Activity {
 
   public CharSequence getAboutMessage() {
     StringBuilder stringBuilder = new StringBuilder();
-    stringBuilder.append(getString(R.string.app_name));
-    stringBuilder.append(" ");
-    stringBuilder.append(getVersionName());
-    stringBuilder.append("\n\n");
-    stringBuilder.append(getString(R.string.legend_swiping));
-    stringBuilder.append("\n\n");
-    stringBuilder.append(getString(R.string.legend)).append(":\n\n");
-    stringBuilder.append(getString(R.string.legend_bold)).append("\n");
-    stringBuilder.append(getString(R.string.legend_star)).append("\n");
-    stringBuilder.append(getString(R.string.legend_hash));
-    stringBuilder.append("\n\n");
-    stringBuilder.append("http://github.com/blackskad/Resto-menu\n\n");
+    stringBuilder.append(getString(R.string.menu_about)).append(":\n\n");
+    stringBuilder.append(getString(R.string.menu_legend_bold)).append("\n");
+    stringBuilder.append(getString(R.string.menu_legend_star)).append("\n");
+    stringBuilder.append(getString(R.string.menu_legend_hash));
     return stringBuilder;
-  }
-
-  private String getVersionName() {
-    try {
-      ComponentName componentName = new ComponentName(this, RestoMenu.class);
-      PackageInfo info = getPackageManager().getPackageInfo(componentName.getPackageName(), 0);
-      return info.versionName;
-    } catch (NameNotFoundException e) {
-      // Won't happen, versionName is present in the manifest!
-      return "";
-    }
   }
 
   private int getVersionCode() {
