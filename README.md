@@ -5,7 +5,7 @@ API
 
 The scraper pull the menu from the UGent website and parses into a workable json format. The current API is located at http://zeus.ugent.be/~blackskad/resto/api/0.1/ The number at the end of the URL indicates the version of the API. Currently the API is at version 0.1
 
-The api currently only supports the json format. If necessairy, the scraper can be adapted to support other formats as well.
+The api currently only supports the json format. If necessary, the scraper can be adapted to support other formats as well.
 
 * ./list.json
 A list of all UGent resto's. For each resto a struct with 4 values is provided: the `name`, `address`, `latitude` and `longitude`.
